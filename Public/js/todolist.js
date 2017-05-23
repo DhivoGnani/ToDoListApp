@@ -83,7 +83,7 @@ function displayListItem(input, finished) {
 
   for (i = 0; i < close.length; i++) {
     close[i].onclick = function() {
-      var index = $(this.parentElement).index();
+      var index = $('li').index($(this.parentElement));
       var element = items[index];
       var div = this.parentElement;
       $.ajax('todoitems?id=' + element._id , {
@@ -93,6 +93,7 @@ function displayListItem(input, finished) {
             console.log(JSON.stringify(data));
             items.splice(index, 1);
             div.style.display = "none";
+            $(div).remove();
           },
           error  : function() { 
             console.log('error');
