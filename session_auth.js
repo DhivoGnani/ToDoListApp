@@ -9,6 +9,7 @@ var bodyParser = require('body-parser');
 
 var db = null; // global variable to hold the connection
 
+
 MongoClient.connect('<mongodb>', function(err,database) {
     db = database; // once connected, assign the connection to the global variable
 })
@@ -34,23 +35,31 @@ var auth = function(req, res, next) {
 };
 
 app.get('/', function(req, res){
-    res.sendfile('index.html');
+    if (req.session.user) {
+      res.sendfile("views/todolist.html");
+    } else {
+      res.sendfile('views/login.html'); 
+    }
 });
 
 // Login endpoint
 app.get('/login', function (req, res) {
-  if (!req.query.username || !req.query.password) {
-    res.send('login failed');    
-  } else if(req.query.username === "Dhivo" || req.query.password === "dhivopassword") {
-    req.session.user = "Dhivo";
-    req.session.admin = true;
-    res.sendfile("todolist.html");
+  if (req.session.user) {
+    res.sendfile('views/todolist.html');
+  } else{
+    if (!req.query.username || !req.query.password) {
+      res.send('login failed');    
+    } else if(req.query.username === "Dhivo" || req.query.password === "dhivopassword") {
+      req.session.user = "Dhivo";
+      req.session.admin = true;
+      res.sendfile("views/todolist.html");
+    }
   }
 });
 
 // Get todolist endpoint
 app.get('/todolist', auth, function (req, res) {
-    res.sendfile("todolist.html");
+    res.sendfile("views/todolist.html");
 });
 
 // Get to do list items

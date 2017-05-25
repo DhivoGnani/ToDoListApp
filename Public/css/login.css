@@ -1,0 +1,86 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+
+* {
+  box-sizing: border-box;
+}
+body {
+	margin:0;
+	padding:0;
+	background:#3b5998;
+}
+
+.login-page {
+	width:360px;
+}
+
+.register-form {
+	display:none;
+}
+
+.form {
+	position:fixed;
+
+	/*center the element*/
+	right:0;
+	left:0;
+	margin-left:auto;
+	margin-right:auto;
+
+	margin-top:8%;
+	padding:45px;
+	max-width:360px;
+	box-shadow:0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+	background:white;
+}
+
+.form input {
+	display:block;
+	width:100%;
+	margin: 0 0 15px 0;
+	padding: 15px;
+	border:0;
+	font-family: "Roboto", sans-serif;
+	font-size: 14px;
+	background:#f2f2f2;
+}
+
+.form button {
+	padding:15px;
+	font-family: "Roboto", sans-serif;
+	background:#3b5998;
+	color:white;
+	border:0;
+	width:100%;
+	cursor:pointer;
+}
+
+.form button:hover {
+
+}
+
+.form .message {
+	margin: 15px 0 0 0;
+	color: #b3b3b3;
+	text-align:center;
+	font-size:12px;
+	font-family: "Roboto", sans-serif;
+}
+
+.form .error-message {
+	color:red;
+	font-size:12px;
+	font-family: "Roboto", sans-serif;
+}
+
+.form .invalid-username.error-message {
+	display:none;
+}
+
+.form .invalid-password.error-message {
+	display:none;
+}
+.form .message a {
+	color:#3b5998;
+	cursor:pointer;
+}
