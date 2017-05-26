@@ -5,6 +5,8 @@ A To Do List web application.
 You can access the app at:
 https://dhivotodo.herokuapp.com/
 
+![Alt text](images/ToDoListApp.png?raw=true "Title")
+
 Temporary Users:
 
 1. username: Dhivo, password: dhivopassword
