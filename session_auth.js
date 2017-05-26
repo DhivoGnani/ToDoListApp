@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 
 // Authentication and Authorization Middleware
 var auth = function(req, res, next) {
-  if (req.session && req.session.user === "Dhivo" && req.session.admin)
+  if (req.session && req.session.user && req.session.admin)
     return next();
   else
     return res.sendStatus(401);
@@ -49,13 +49,44 @@ app.get('/login', function (req, res) {
   } else{
     if (!req.query.username || !req.query.password) {
       res.send('login failed');    
-    } else if(req.query.username === "Dhivo" || req.query.password === "dhivopassword") {
-      req.session.user = "Dhivo";
-      req.session.admin = true;
-      res.sendfile("views/todolist.html");
+    } else {
+      db.collection('usercollection', function (err, collection) {
+        collection.findOne({username:req.query.username, password:req.query.password}, function(err, items) {
+          if(err) throw err;    
+          
+          if (items) {
+            req.session.user = req.query.username;
+            req.session.admin = true; 
+            res.sendfile("views/todolist.html");      
+          } else {
+            res.send('login failed');
+          }
+        });
+      });
     }
   }
 });
+
+
+
+// // Register endpoint
+// app.get('/register', function (req, res) {
+//   if (req.session.user) {
+//     res.sendfile('views/todolist.html');
+//   } else{
+//     if (!req.query.username || !req.query.password) {
+//       res.send('register failed');    
+//     } else {
+//       db.collection('usercollection', function (err, collection) {
+//         collection.insert({username: req.query.username, password: req.query.password}, function(err, items) {
+//           req.session.user = req.query.username;
+//           req.session.admin = true;       
+//         });
+//       }
+//     }
+//     }
+//   }
+// });
 
 // Get todolist endpoint
 app.get('/todolist', auth, function (req, res) {
@@ -104,25 +135,20 @@ app.delete('/todoitems', auth, function(req, res){
   });
 })
 
+app.get('/user', function (req, res) {
+  res.send({username: req.session.user});
+});
+
 // Logout endpoint
 app.get('/logout', function (req, res) {
   req.session.destroy();
   res.send("logout success!");
 });
- 
+
 // Get content endpoint
 app.get('/content', auth, function (req, res) {
     res.send("You can only see this after you've logged in.");
 });
 
-app.get('/test', function (req, res) {
-  db.collection('usercollection', function (err, collection) {
-	 collection.find().toArray(function(err, items) {
-		if(err) throw err;    
-		res.send(items);            
-	});
-    });
-});
- 
 app.listen(3000);
 console.log("app running at http://localhost:3000");

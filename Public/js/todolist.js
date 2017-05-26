@@ -113,5 +113,10 @@ $(document).ready(function() {
   	   }
     });
 
+    $.get("user", function(result){
+        var title = result.username + "'s To Do List";
+        $(".title").text(title);
+    })
+
 });
 
