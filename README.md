@@ -20,6 +20,7 @@ This is what led to https://dhivotodo.herokuapp.com/
 Anyone will be able to create an account and have access to their own To Do list. 
 Writing down items on a To Do list will help you keep track of priorities and upcoming events. 
 
+## Screenshot:
 ![Alt text](images/ToDoListApp.png?raw=true "Title")
 
 
