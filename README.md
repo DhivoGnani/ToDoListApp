@@ -5,10 +5,11 @@ A To Do List web application.
 You can access the app at:
 https://dhivotodo.herokuapp.com/
 
-Temporary Users: 
-username: Dhivo, password: dhivopassword
+Temporary Users:
 
-username: Bob, password: bobpassword
+1. username: Dhivo, password: dhivopassword
+
+2. username: Bob, password: bobpassword
 
 Soon to come:
 Anyone will be able to create an account and have access to their own To Do list. 
