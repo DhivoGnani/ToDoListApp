@@ -26,7 +26,7 @@ I used Node and MongoDB.
 ## Soon to Come:
 You will be able to archive completed tasks and still have access to them in the future. 
 You will be able filter and search for tasks.
-You will be group tasks into lists.
+You will be able to group tasks into lists.
 
 ## Screenshot:
 ![Alt text](images/ToDoListApp.png?raw=true "Title")
