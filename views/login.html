@@ -9,15 +9,18 @@
 			<div class = "form">
 				<form id="loginForm" class="login-form">
 				  <input name="username" type="text" placeholder="Username"/>
-				  <p class="invalid-username error-message">Invalid Username</p>
+				  <p class="login invalid-username error-message">Invalid Username</p>
 				  <input name="password" type="password" placeholder="Password"/>
-				  <p class="invalid-password error-message">Invalid Password</p>
+				  <p class="login invalid-password error-message">Invalid Password</p>
+				  <p class="invalid-credentials error-message" style="display:none;">Invalid Credentials</p>
 				  <button type="submit">LOGIN</button>
-				  <p class="message">Not registered?&nbsp;<a href="#">Create an account</a></p>
+				  <p class="message" >Not registered?&nbsp;<a href="#">Create an account</a></p>
 				</form>
-				<form class="register-form">
+				<form id = "registerForm" class="register-form">
 					<input name="username" type="text" placeholder="name"/>
+					<p class="register invalid-username error-message">Invalid Username</p>
 					<input name="password" type="password" placeholder="password"/>
+					<p class="register invalid-password error-message">Invalid Password</p>
 					<button type="create">CREATE</button>
 					<p class="message">Already Registered?&nbsp;<a href="#">Sign in</a></p>
 				<form>

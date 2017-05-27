@@ -12,7 +12,7 @@ var db = null; // global variable to hold the connection
 
 MongoClient.connect('<mongodb>', function(err,database) {
     db = database; // once connected, assign the connection to the global variable
-})
+});
 
 app.use(express.static(path.join(__dirname, 'Public')));
 
@@ -34,6 +34,7 @@ var auth = function(req, res, next) {
     return res.sendStatus(401);
 };
 
+
 app.get('/', function(req, res){
     if (req.session.user) {
       res.sendfile("views/todolist.html");
@@ -53,7 +54,10 @@ app.get('/login', function (req, res) {
       db.collection('usercollection', function (err, collection) {
         collection.findOne({username:req.query.username, password:req.query.password}, function(err, items) {
           if(err) throw err;    
-          
+          if (!items) {
+              res.status(400);
+              return res.send({failed:"Did not find matching credentials"});
+          } 
           if (items) {
             req.session.user = req.query.username;
             req.session.admin = true; 
@@ -68,25 +72,28 @@ app.get('/login', function (req, res) {
 });
 
 
+// Register endpoint
+app.get('/register', function (req, res) {
+  if (req.session.user) {
+    res.sendfile('views/todolist.html');
+  } else{
+    if (!req.query.username || !req.query.password) {
+      res.send('register failed');    
+    } else {
+      db.collection('usercollection', function (err, collection) {
+        collection.insert({username: req.query.username, password: req.query.password}, function(err, items) {
+          if (err)
+           res.status(400);
+           return res.send(err);
+          req.session.user = req.query.username;
+          req.session.admin = true;     
+          return res.send(200);
+         });
+      });
+    }
+  }
+});
 
-// // Register endpoint
-// app.get('/register', function (req, res) {
-//   if (req.session.user) {
-//     res.sendfile('views/todolist.html');
-//   } else{
-//     if (!req.query.username || !req.query.password) {
-//       res.send('register failed');    
-//     } else {
-//       db.collection('usercollection', function (err, collection) {
-//         collection.insert({username: req.query.username, password: req.query.password}, function(err, items) {
-//           req.session.user = req.query.username;
-//           req.session.admin = true;       
-//         });
-//       }
-//     }
-//     }
-//   }
-// });
 
 // Get todolist endpoint
 app.get('/todolist', auth, function (req, res) {
@@ -150,5 +157,6 @@ app.get('/content', auth, function (req, res) {
     res.send("You can only see this after you've logged in.");
 });
 
-app.listen(3000);
+// process.env.PORT is Heroku's port environmental variable
+app.listen(process.env.PORT||3000);
 console.log("app running at http://localhost:3000");

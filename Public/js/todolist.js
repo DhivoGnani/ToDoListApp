@@ -120,3 +120,9 @@ $(document).ready(function() {
 
 });
 
+function logout() {
+  $.get("logout", function(result){
+    window.location.href = '../';
+  })
+}
+
